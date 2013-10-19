@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   <script src="js/bootstrap.min.js"></script>
   </head>
 
-  <body>
+  <body onload="init();">
 
   	<?php include_once 'menu.php'; ?>
 
@@ -99,25 +99,28 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   	</div>
 
   	<div class="container">
-  		<!-- Example row of columns -->
-  		<div class="row">
-  			<div class="col-lg-4">
-  				<h2>Heading</h2>
-  				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-  				<p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-  			</div>
-  			<div class="col-lg-4">
-  				<h2>Heading</h2>
-  				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-  				<p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-  			</div>
-  			<div class="col-lg-4">
-  				<h2>Heading</h2>
-  				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-  				<p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-  			</div>
-  		</div>
-
+<div style="width:100%; height:600px" id="mapdiv">
+</div>
+<script src="http://openlayers.org/api/OpenLayers.js"></script>
+<script>
+    map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+ 
+    var lonLat = new OpenLayers.LonLat( 9.5788, 48.9773 )
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            map.getProjectionObject() // to Spherical Mercator Projection
+          );
+ 
+    var zoom=11;
+        var pois = new OpenLayers.Layer.Text( "Eventi",
+                    { location:"./mapa.txt",
+                      projection: map.displayProjection
+                    });
+    map.addLayer(pois);
+ 
+    map.setCenter (lonLat, zoom);
+  </script>
   		<hr>
 
   		<footer>
