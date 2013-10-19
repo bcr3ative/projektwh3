@@ -37,8 +37,8 @@
 <html>
 <head>
 	<title>Dodavanje evenata</title>
-	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
 	<script>
 		$(function() {
 		$( "#datepicker" ).datepicker();
@@ -51,8 +51,8 @@
 		<input type="text" name="opis" placeholder="Opis"><br>
 		<input type="text" name="lon" placeholder="Širina"><br>
 		<input type="text" name="lat" placeholder="Dužina"><br>
-		<input type="checkbox" name="days"><br>
-		<input type="text" name="numdays" placeholder="Broj dana"><br>
+		<input type="checkbox" id="multiday" name="days"><br>
+		<input type="text" id="numdays" name="numdays" placeholder="Broj dana"><br>
 		<input type="submit" name="submit" value="Upisi event">
 		<p>Date: <input type="text" id="datepicker" /></p>
 	</form>
