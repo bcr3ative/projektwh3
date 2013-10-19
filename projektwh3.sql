@@ -76,10 +76,12 @@ CREATE  TABLE IF NOT EXISTS `projektwh3`.`event` (
   `lon` FLOAT NOT NULL ,
   `id_kategorija` INT NOT NULL ,
   `id_tip` INT NOT NULL ,
-  PRIMARY KEY (`id`) ,
+  `autor` INT NOT NULL ,
+  PRIMARY KEY (`id`, `autor`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   INDEX `fk_event_kategorija` (`id_kategorija` ASC) ,
   INDEX `fk_event_tip` (`id_tip` ASC) ,
+  INDEX `fk_event_korisnik1` (`autor` ASC) ,
   CONSTRAINT `fk_event_kategorija`
     FOREIGN KEY (`id_kategorija` )
     REFERENCES `projektwh3`.`kategorija` (`id` )
@@ -89,7 +91,12 @@ CREATE  TABLE IF NOT EXISTS `projektwh3`.`event` (
     FOREIGN KEY (`id_tip` )
     REFERENCES `projektwh3`.`tip` (`id` )
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_event_korisnik1`
+    FOREIGN KEY (`autor` )
+    REFERENCES `projektwh3`.`korisnik` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -134,30 +141,6 @@ CREATE  TABLE IF NOT EXISTS `projektwh3`.`prisutnost` (
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_event_korisnikpris`
-    FOREIGN KEY (`id_event` )
-    REFERENCES `projektwh3`.`event` (`id` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `projektwh3`.`autor`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `projektwh3`.`autor` ;
-
-CREATE  TABLE IF NOT EXISTS `projektwh3`.`autor` (
-  `id_korisnik` INT NOT NULL ,
-  `id_event` INT NOT NULL ,
-  PRIMARY KEY (`id_korisnik`, `id_event`) ,
-  INDEX `fk_event_autor` (`id_event` ASC) ,
-  INDEX `fk_autor_event` (`id_korisnik` ASC) ,
-  CONSTRAINT `fk_autor_event`
-    FOREIGN KEY (`id_korisnik` )
-    REFERENCES `projektwh3`.`korisnik` (`id` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_event_autor`
     FOREIGN KEY (`id_event` )
     REFERENCES `projektwh3`.`event` (`id` )
     ON DELETE CASCADE
