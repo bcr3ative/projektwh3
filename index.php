@@ -106,13 +106,13 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
     map = new OpenLayers.Map("mapdiv");
     map.addLayer(new OpenLayers.Layer.OSM());
  
-    var lonLat = new OpenLayers.LonLat( 14.1, 45.9 )
+    var lonLat = new OpenLayers.LonLat( 14.55, 45.25 )
           .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
             map.getProjectionObject() // to Spherical Mercator Projection
           );
  
-    var zoom=11;
+    var zoom=10;
         var pois = new OpenLayers.Layer.Text( "Eventi",
                     { location:"./mapa.php",
                       projection: map.displayProjection
