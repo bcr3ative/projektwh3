@@ -15,7 +15,7 @@ $db_password='projektwh3';
 session_start();
 
 // Site info
-$site_name='projektwh3';
+$site_name='KamoKuda';
 
 // Setting UTF-8 encoding
 mb_internal_encoding('UTF-8');
