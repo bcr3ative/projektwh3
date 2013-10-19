@@ -42,7 +42,7 @@
 	<meta name="author" content="Unknown" >
 	<!-- <link rel="shortcut icon" href="../../assets/ico/favicon.png"> -->
 
-	<title><?php echo $site_name; ?></title>
+	<title><?php echo $site_name; ?> | Dodaj event</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.css" rel="stylesheet">

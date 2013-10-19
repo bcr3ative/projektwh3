@@ -19,6 +19,7 @@ echo <<<END
 					<li class="dropdown">
 		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meni <b class="caret"></b></a>
 		              <ul class="dropdown-menu">
+		               <li><a href="search.php">Pretraga</a></li>
 		                <li><a href="add_event.php">Dodaj event</a></li>
 		              </ul>
 		            </li>
