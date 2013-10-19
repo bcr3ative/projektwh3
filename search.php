@@ -115,10 +115,13 @@
 						$pretraga=mysqli_query($mysqli, $result);
 
 						db_disconnect();
+						echo "<div class='container'>";
+						echo "<table class='table table-striped'>";
 						while($row = $pretraga->fetch_array()){ 
-			            	echo "<a href='event.php?e=$row[id]'>$row[naziv]</a><br>";
+			            	echo "<tr><a href='event.php?e=$row[id]'>$row[naziv]</a></tr>";
 			            }
-	
+			            echo "</table>";
+						echo "</div>";
 					}
 						
 						
