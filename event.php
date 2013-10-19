@@ -2,11 +2,11 @@
 include_once 'config.php';
 ?>
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Event</title>
-</head>
+  </head>
 <body>
 	<?php
 	db_connect();
