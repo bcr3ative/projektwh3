@@ -13,6 +13,18 @@
 				<li class="active"><a href="index.php">Naslovnica</a></li>
 				<li><a href="#about">O Nama</a></li>
 				<li><a href="#contact">Kontakt</a></li>
+				<?php
+				if (isset($_SESSION['user']) && isset($_SESSION['nickname'])) {
+echo <<<END
+					<li class="dropdown">
+		              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meni <b class="caret"></b></a>
+		              <ul class="dropdown-menu">
+		                <li><a href="add_event.php">Dodaj event</a></li>
+		              </ul>
+		            </li>
+END;
+		        }
+	            ?>
 			</ul>
 			<?php
 				if (isset($_SESSION['user']) && isset($_SESSION['nickname'])) {
