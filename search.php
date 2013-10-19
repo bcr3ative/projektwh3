@@ -118,7 +118,7 @@
 						echo "<div class='container'>";
 						echo "<table class='table table-striped'>";
 						while($row = $pretraga->fetch_array()){ 
-			            	echo "<tr><a href='event.php?e=$row[id]'>$row[naziv]</a></tr>";
+			            	echo "<a href='event.php?e=$row[id]'>$row[naziv]</a><br>";
 			            }
 			            echo "</table>";
 						echo "</div>";
