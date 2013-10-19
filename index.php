@@ -3,16 +3,16 @@ include_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD']==='POST') {
 		// Registracija
-	if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+	if(!empty($_POST['nickname']) && !empty($_POST['emailreg']) && !empty($_POST['passwordreg'])) {
 		db_connect();
 
-		$username=mysqli_real_escape_string($mysqli, $_POST['username']);
-		$email=mysqli_real_escape_string($mysqli, $_POST['email']);
-		$password=mysqli_real_escape_string($mysqli, $_POST['password']);
+		$nickname=mysqli_real_escape_string($mysqli, $_POST['nickname']);
+		$email=mysqli_real_escape_string($mysqli, $_POST['emailreg']);
+		$password=mysqli_real_escape_string($mysqli, $_POST['passwordreg']);
 
-		$query=mysqli_query($mysqli, "SELECT id_user FROM user WHERE username = '$username';");
+		$query=mysqli_query($mysqli, "SELECT id FROM korisnik WHERE mail = '$email';");
 		if (mysqli_num_rows($query)==0) {
-			mysqli_query($mysqli, "INSERT INTO user (username, email, password) VALUES ('$username', '$email', md5('$password'));");
+			mysqli_query($mysqli, "INSERT INTO korisnik (nadimak, mail, lozinka) VALUES ('$nickname', '$email', md5('$password'));");
 		}					
 		db_disconnect();		
 		// Login		
@@ -22,12 +22,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 		$email=mysqli_real_escape_string($mysqli, $_POST['email']);
 		$password=mysqli_real_escape_string($mysqli, $_POST['password']);
 
-		$query=mysqli_query($mysqli, "SELECT * FROM korisnik WHERE email = '$email' AND password = md5('$password');");
-		$data=mysqli_fetch_array($query);
+		$query=mysqli_query($mysqli, "SELECT * FROM korisnik WHERE mail = '$email' AND lozinka = md5('$password');");
 		if (mysqli_num_rows($query)==1) {
+			$data=mysqli_fetch_array($query);
 			$_SESSION['user']=$email;
 			$_SESSION['nickname']=$data['nadimak'];
-
 		}
 		db_disconnect();
 	}
@@ -56,59 +55,46 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
       <script src="../../assets/js/html5shiv.js"></script>
       <script src="../../assets/js/respond.min.js"></script>
       <![endif]-->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery.js"></script>
+      <script src="js/bootstrap.min.js"></script>
   </head>
 
   <body>
 
-  	<div class="navbar navbar-inverse navbar-fixed-top">
-  		<div class="container">
-  			<div class="navbar-header">
-  				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-  					<span class="icon-bar"></span>
-  					<span class="icon-bar"></span>
-  					<span class="icon-bar"></span>
-  				</button>
-  				<a class="navbar-brand" href="#"><?php echo $site_name; ?></a>
-  			</div>
-  			<div class="navbar-collapse collapse">
-  				<ul class="nav navbar-nav">
-  					<li class="active"><a href="#">Naslovnica</a></li>
-  					<li><a href="#about">About</a></li>
-  					<li><a href="#contact">Contact</a></li>
-  					<li class="dropdown">
-  						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-  						<ul class="dropdown-menu">
-  							<li><a href="#">Action</a></li>
-  							<li><a href="#">Another action</a></li>
-  							<li><a href="#">Something else here</a></li>
-  							<li class="divider"></li>
-  							<li class="dropdown-header">Nav header</li>
-  							<li><a href="#">Separated link</a></li>
-  							<li><a href="#">One more separated link</a></li>
-  						</ul>
-  					</li>
-  				</ul>
-  				<form class="navbar-form navbar-right">
-  					<div class="form-group">
-  						<input type="text" placeholder="Email" class="form-control" name="email">
-  					</div>
-  					<div class="form-group">
-  						<input type="password" placeholder="Password" class="form-control" name="password">
-  					</div>
-  					<button type="submit" class="btn btn-success">Sign in</button>
-  				</form>
-  			</div><!--/.navbar-collapse -->
-  		</div>
-  	</div>
+  	<?php include_once 'menu.php'; ?>
 
   	<!-- Main jumbotron for a primary marketing message or call to action -->
   	<div class="jumbotron">
   		<div class="container">
-  			<h1>Hello, world!</h1>
-  			<p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-  			<p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+  			<div class="col-lg-8">
+  				<h1>Hello, world!</h1>
+	  			<p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+	  			<p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+  			</div>
+  			<div class="col-lg-4">
+  				<form class="form-horizontal" role="form" action="index.php" method="POST">
+  					<div class="form-group">
+  						<div class="col-lg-8">
+  							<input type="text" class="form-control" placeholder="Nadimak" class="form-control" name="nickname">
+  						</div>
+  					</div>
+  					<div class="form-group">
+  						<div class="col-lg-8">
+  							<input type="email" class="form-control" id="inputEmail1" placeholder="Email" name="emailreg">
+  						</div>
+  					</div>
+  					<div class="form-group">
+  						<div class="col-lg-8">
+  							<input type="password" class="form-control" id="inputPassword1" placeholder="Lozinka" name="passwordreg">
+  						</div>
+  					</div>
+  					<div class="form-group">
+  						<div class="col-lg-4">
+  							<button type="submit" class="btn btn-default">Sign up</button>
+  						</div>
+  					</div>
+  				</form>
+  			</div>
   		</div>
   	</div>
 
@@ -138,5 +124,5 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   			<p>&copy; <?php echo $site_name; ?> 2013</p>
   		</footer>
   	</div> <!-- /container -->
-</body>
-</html>
+  </body>
+  </html>
