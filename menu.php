@@ -27,7 +27,7 @@
 				</li>
 			</ul>
 			<?php
-				if (isset($_SESSION['user'])&&isset($_SESSION['nickname'])) {
+				if (isset($_SESSION['user']) && isset($_SESSION['nickname'])) {
 					echo "<p class='navbar-text pull-right'>Prijavljen kao ";
 					echo $_SESSION['nickname'];
 					echo " | <a href='logout.php'>Odjava</a></p>";

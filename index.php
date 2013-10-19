@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
       <script src="../../assets/js/html5shiv.js"></script>
       <script src="../../assets/js/respond.min.js"></script>
       <![endif]-->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   </head>
 

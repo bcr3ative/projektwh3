@@ -10,7 +10,7 @@
 		$days=$_POST['days'];
 		$date=$_POST['datepicker'];
 
-		if (isset($_SESSION['user'])) {
+		if (isset($_SESSION['user']) && isset($_SESSION['nickname'])) {
 			db_connect();
 			$user=$_SESSION['user'];
 			$result=mysqli_query($mysqli, "SELECT id FROM korisnik WHERE mail = '$user';");
@@ -19,8 +19,7 @@
 
 			if(empty($_POST['event']) || empty($_POST['lon']) || empty($_POST['lat']) || empty($_POST['numdays']) || empty($_POST['days'])) {
 
-			}
-			else {
+			} else {
 				if(empty($_POST['days'])) {
 					$numdays=0;
 				}
@@ -29,10 +28,9 @@
 					$id=mysqli_insert_id($mysqli);
 				
 			}
+			db_disconnect();
 		}
 	}	
-	db_disconnect();
-
 ?>
 
 <!DOCTYPE html> 
