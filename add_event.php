@@ -22,9 +22,8 @@
 
 				if(!isset($numdays)) {
 					$numdays=0;
-				}
-				echo $date;
-				mysqli_query($mysqli, "INSERT INTO event (naziv, opis, lon, lat, broj_dana, vrijeme, autor, id_kategorija, id_tip) VALUES ('$event', '$opis', '$lon', '$lat', '$numdays', 'FROM_UNIXTIME($date)', '$autor', '$category', '$type');");
+				}			
+				mysqli_query($mysqli, "INSERT INTO event (naziv, opis, lon, lat, broj_dana, vrijeme, autor, id_kategorija, id_tip) VALUES ('$event', '$opis', '$lon', '$lat', '$numdays', from_unixtime($datum1), '$autor', '$category', '$type');");
 				$id=mysqli_insert_id($mysqli);
 				db_disconnect();
 			}
