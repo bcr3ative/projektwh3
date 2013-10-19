@@ -5,6 +5,8 @@ body {
 
 .jumbotron {
 	margin-bottom: 0;
-	/*background: rgb(238, 238, 238);
-	background: rgba(238, 238, 238, 0.5);*/
+}
+
+.margin-top {
+	margin-top: 20px;
 }

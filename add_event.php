@@ -22,8 +22,9 @@
 
 				if(!isset($numdays)) {
 					$numdays=0;
-				}			
-				mysqli_query($mysqli, "INSERT INTO event (naziv, opis, lon, lat, broj_dana, vrijeme, autor, id_kategorija, id_tip) VALUES ('$event', '$opis', '$lon', '$lat', '$numdays', from_unixtime($datum1), '$autor', '$category', '$type');");
+				}
+				$date=strtotime("$date");
+				mysqli_query($mysqli, "INSERT INTO event (naziv, opis, lon, lat, broj_dana, vrijeme, autor, id_kategorija, id_tip) VALUES ('$event', '$opis', '$lon', '$lat', '$numdays', from_unixtime($date), '$autor', '$category', '$type');");
 				$id=mysqli_insert_id($mysqli);
 				db_disconnect();
 			}
@@ -32,15 +33,35 @@
 	}	
 ?>
 
-<!DOCTYPE html> 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>Dodavanje evenata</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Unknown" >
+	<!-- <link rel="shortcut icon" href="../../assets/ico/favicon.png"> -->
+
+	<title><?php echo $site_name; ?></title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+      <![endif]-->
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 	<script>
 		$(function() {
 			$('#numdays').hide();
+			$('#typecat').hide();
 			$("#datepicker").datepicker();
 			$('#multiday').change(function() {
 			  if ($(this).prop('checked')) {
@@ -50,36 +71,89 @@
 			  }
 			});
 			$('#category').change(function() {
-			  $('#type').append($('#type').load('get_cat.php?category='+$('#category').val()));
+				$('#typecat').show();
+			  	$('#type').append($('#type').load('get_cat.php?category='+$('#category').val()));
 			});
 		});
 	</script>
 </head>
-<body>
-	<form action="add_event.php" method="POST">
-		<input type="text" name="event" placeholder="Naziv"><br>
-		<input type="text" name="opis" placeholder="Opis"><br>
-		<input type="text" name="lon" placeholder="Širina"><br>
-		<input type="text" name="lat" placeholder="Dužina"><br>
-		Višednevno: <input type="checkbox" id="multiday"><br>
-		<input type="text" id="numdays" name="numdays" placeholder="Broj dana"><br>
-		<p>Datum: <input type="text" id="datepicker" name="datepicker"/></p>
-		Kategorija: 
-		<select name="category" id="category">
-			<option value="default" disabled="disabled" selected="selected">Odaberi</option>
-			<?php
-			    db_connect();
-				 if ($pretraga = $mysqli->query("SELECT id, ime FROM kategorija;")) { 
-        		 	while($row = $pretraga->fetch_array()){ 
-            			echo '<option value="'.$row['id'].'">'.$row['ime'].'</option>';
-        			} 
-   				}
-    			db_disconnect();
-			?>
-		</select><br>
-		Tip: 
-		<span id="type"></span><br>
-		<input type="submit" name="submit" value="Dodaj event">
-	</form>
+<body  onload="init();">
+	<?php include_once 'menu.php'; ?>
+	<div class="container">
+		<form class="form-horizontal margin-top" role="form" action="add_event.php" method="POST">
+			<div class="form-group">
+				<label for="inputName1" class="col-lg-offset-2 col-lg-2 control-label">Naziv</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="inputName1" placeholder="Naziv" name="event">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputDesc1" class="col-lg-offset-2 col-lg-2 control-label">Opis</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="inputDesc1" placeholder="Opis" name="opis">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-offset-2 col-lg-2 control-label">Širina</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="inputEmail1" placeholder="Širina" name="lon">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-offset-2 col-lg-2 control-label">Dužina</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="inputEmail1" placeholder="Dužina" name="lat">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-offset-4 col-lg-8">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="multiday"> Višednevno
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" id="numdays">
+				<label for="inputEmail1" class="col-lg-offset-2 col-lg-2 control-label">Trajanje</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="inputEmail1" placeholder="Broj dana" name="numdays">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-offset-2 col-lg-2 control-label">Kategorija</label>
+				<div class="col-lg-4">
+					<select class="form-control" name="category" id="category">
+						<option value="default" disabled="disabled" selected="selected">Odaberi</option>
+					<?php
+					    db_connect();
+						 if ($pretraga = $mysqli->query("SELECT id, ime FROM kategorija;")) { 
+		        		 	while($row = $pretraga->fetch_array()){ 
+		            			echo '<option value="'.$row['id'].'">'.$row['ime'].'</option>';
+		        			} 
+		   				}
+		    			db_disconnect();
+					?>
+					</select>
+				</div>
+			</div>
+			<div class="form-group" id="typecat">
+				<label for="inputEmail1" class="col-lg-offset-2 col-lg-2 control-label">Tip</label>
+				<div class="col-lg-4" id="type">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail1" class="col-lg-offset-2 col-lg-2 control-label">Datum</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="datepicker" placeholder="Broj dana" name="datepicker">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-offset-4 col-lg-8">
+					<button type="submit" name="submit" class="btn btn-default">Dodaj event</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
