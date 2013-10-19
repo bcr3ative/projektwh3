@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `projektwh3`.`korisnik` ;
 
 CREATE  TABLE IF NOT EXISTS `projektwh3`.`korisnik` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `lozinka` VARCHAR(20) NOT NULL ,
+  `lozinka` VARCHAR(45) NOT NULL ,
   `mail` VARCHAR(45) NOT NULL ,
   `nadimak` VARCHAR(20) NOT NULL ,
   `opis` TEXT NULL ,
