@@ -1,6 +1,37 @@
 <?php
-	session_start();
-	include_once 'config.php';
+include_once 'config.php';
+
+if ($_SERVER['REQUEST_METHOD']==='POST') {
+		// Registracija
+	if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+		db_connect();
+
+		$username=mysqli_real_escape_string($mysqli, $_POST['username']);
+		$email=mysqli_real_escape_string($mysqli, $_POST['email']);
+		$password=mysqli_real_escape_string($mysqli, $_POST['password']);
+
+		$query=mysqli_query($mysqli, "SELECT id_user FROM user WHERE username = '$username';");
+		if (mysqli_num_rows($query)==0) {
+			mysqli_query($mysqli, "INSERT INTO user (username, email, password) VALUES ('$username', '$email', md5('$password'));");
+		}					
+		db_disconnect();		
+		// Login		
+	} elseif (!empty($_POST['email']) && !empty($_POST['password'])) {
+		db_connect();
+
+		$email=mysqli_real_escape_string($mysqli, $_POST['email']);
+		$password=mysqli_real_escape_string($mysqli, $_POST['password']);
+
+		$query=mysqli_query($mysqli, "SELECT * FROM korisnik WHERE email = '$email' AND password = md5('$password');");
+		$data=mysqli_fetch_array($query);
+		if (mysqli_num_rows($query)==1) {
+			$_SESSION['user']=$email;
+			$_SESSION['nickname']=$data['nadimak'];
+
+		}
+		db_disconnect();
+	}
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,10 +56,12 @@
       <script src="../../assets/js/html5shiv.js"></script>
       <script src="../../assets/js/respond.min.js"></script>
       <![endif]-->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </head>
 
   <body>
-  	
+
   	<div class="navbar navbar-inverse navbar-fixed-top">
   		<div class="container">
   			<div class="navbar-header">
@@ -37,11 +70,11 @@
   					<span class="icon-bar"></span>
   					<span class="icon-bar"></span>
   				</button>
-  				<a class="navbar-brand" href="#">Project name</a>
+  				<a class="navbar-brand" href="#"><?php echo $site_name; ?></a>
   			</div>
   			<div class="navbar-collapse collapse">
   				<ul class="nav navbar-nav">
-  					<li class="active"><a href="#">Home</a></li>
+  					<li class="active"><a href="#">Naslovnica</a></li>
   					<li><a href="#about">About</a></li>
   					<li><a href="#contact">Contact</a></li>
   					<li class="dropdown">
@@ -59,10 +92,10 @@
   				</ul>
   				<form class="navbar-form navbar-right">
   					<div class="form-group">
-  						<input type="text" placeholder="Email" class="form-control">
+  						<input type="text" placeholder="Email" class="form-control" name="email">
   					</div>
   					<div class="form-group">
-  						<input type="password" placeholder="Password" class="form-control">
+  						<input type="password" placeholder="Password" class="form-control" name="password">
   					</div>
   					<button type="submit" class="btn btn-success">Sign in</button>
   				</form>
@@ -102,15 +135,8 @@
   		<hr>
 
   		<footer>
-  			<p>&copy; Company 2013</p>
+  			<p>&copy; <?php echo $site_name; ?> 2013</p>
   		</footer>
   	</div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

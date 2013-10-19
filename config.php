@@ -11,8 +11,11 @@ $db_name='projektwh3';
 $db_username='projektwh3';
 $db_password='projektwh3';
 
+// Session
+session_start();
+
 // Site info
-$site_name='projekt';
+$site_name='projektwh3';
 
 // Setting UTF-8 encoding
 mb_internal_encoding('UTF-8');
