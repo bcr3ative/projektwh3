@@ -20,7 +20,7 @@ while($row=$res->fetch_array()) {
 	if ($cat==1)$ikona="theatre.png";
 	if ($cat==2)$ikona="sport.png";
 	if ($cat==3)$ikona="cinema.png";
-	echo "$lat	$lon	<a href='event.php?e=$id'>$naziv</a>	$vrijeme<br/>by $autor	/ikone/$ikona	50,50	-25,-25";
+	echo "$lat	$lon	<a href='event.php?e=$id'>$naziv</a>	$vrijeme<br/>by $autor	ikone/$ikona	50,50	-25,-25";
 	echo "\n";
 }
 db_disconnect();
