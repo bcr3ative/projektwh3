@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
-	<meta name="author" content="">
+	<meta name="author" content="Unknown" >
 	<!-- <link rel="shortcut icon" href="../../assets/ico/favicon.png"> -->
 
 	<title><?php echo $site_name; ?></title>
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
       <script src="../../assets/js/html5shiv.js"></script>
       <script src="../../assets/js/respond.min.js"></script>
       <![endif]-->
-    <script src="js/jquery.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
   </head>
 
