@@ -112,6 +112,29 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 
   	var lonLat = new OpenLayers.LonLat( 14.55, 45.25 )
   	.transform(
+  	<div class="container">
+<div style="width:100%; height:600px" id="mapdiv"></div>
+
+<script src="http://openlayers.org/api/OpenLayers.js"></script>
+<script>
+    map = new OpenLayers.Map("mapdiv");
+    map.addLayer(new OpenLayers.Layer.OSM());
+    Lon=14.55;
+    Lat=45.25;
+ 
+<?php
+if (isset($_SESSION['user']))
+{
+	db_connect();
+	$res=mysqli_query($mysqli,"SELECT lat, lon FROM korisnik WHERE mail='$_SESSION[user]';");
+	$row=$res->fetch_array();
+	echo "Lon=$row[lon];";
+	echo "Lat=$row[lat];";
+	db_disconnect();
+}
+?>
+    var lonLat = new OpenLayers.LonLat( Lon, Lat )
+          .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
             map.getProjectionObject() // to Spherical Mercator Projection
             );
